@@ -1,7 +1,18 @@
+from tech_news.database import db
+
+
 # Requisito 7
 def search_by_title(title):
-    """Seu código deve vir aqui"""
-    raise NotImplementedError
+    try:
+        query = db.news.find(
+            {"title": {"$regex": title, "$options": "i"}},
+            projection=["title", "url"],
+        )
+
+        return [(item["title"], item["url"]) for item in query]
+
+    except Exception as e:
+        raise e
 
 
 # Requisito 8
